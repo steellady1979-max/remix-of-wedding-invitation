@@ -34,11 +34,14 @@ export const Route = createFileRoute("/")({
 const WEDDING_DATE = new Date("2026-10-17T14:30:00+04:00").getTime();
 
 function useCountdown() {
-  const [now, setNow] = useState(() => Date.now());
+  // Start with null so SSR and the first client render match; start ticking after hydration.
+  const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
+    setNow(Date.now());
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
+  if (now === null) return { days: null, hours: null, minutes: null, seconds: null };
   const diff = Math.max(0, WEDDING_DATE - now);
   const days = Math.floor(diff / 86400000);
   const hours = Math.floor((diff / 3600000) % 24);
@@ -472,7 +475,7 @@ function Details() {
               style={{ animationDelay: `${420 + i * 90}ms` }}
             >
               <div className="font-heading text-3xl md:text-5xl text-[var(--sage-deep)] tabular-nums">
-                {String(u.v).padStart(2, "0")}
+                {u.v === null ? "--" : String(u.v).padStart(2, "0")}
               </div>
               <div className="font-text text-[10px] md:text-xs tracking-[0.2em] uppercase text-muted-foreground mt-1">
                 {u.l}
