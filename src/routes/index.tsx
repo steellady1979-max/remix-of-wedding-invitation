@@ -326,7 +326,7 @@ function IntroVideo({ onFinish }: { onFinish: () => void }) {
     >
       <video
         ref={videoRef}
-        src={weddingVideoAsset}
+        src={weddingVideoAsset.url}
         autoPlay
         muted
         playsInline
@@ -435,23 +435,22 @@ function Details() {
 
       <header className="text-center max-w-3xl animate-fade-in-up" style={{ animationDelay: "80ms" }}>
         <h1 className="font-heading text-6xl md:text-8xl leading-[1.05] text-[var(--sage-deep)]">
-          იოსები
+          ელენე
           <span className="block text-3xl md:text-5xl my-2 text-[var(--gold)] animate-gentle-float" style={{ animationDelay: "1.2s" }}>&</span>
-          მარიამი
+          შოთი
         </h1>
         <div className="flex items-center justify-center gap-4 mt-8 mb-4">
           <span className="h-px w-16 md:w-24 bg-[var(--sage-deep)]/40" />
           <p className="font-text text-base md:text-lg tracking-[0.25em] uppercase text-foreground/80">
-            17 · 10 · 2026
+            03 · 10 · 2026
           </p>
           <span className="h-px w-16 md:w-24 bg-[var(--sage-deep)]/40" />
         </div>
       </header>
 
       <img
-        src={coupleNewAsset}
-
-        alt="იოსები და მარიამი"
+        src={coupleNewAsset.url}
+        alt="ელენე და შოთი"
         className="w-[min(80vw,380px)] h-auto my-8 md:my-10 drop-shadow-[0_15px_30px_rgba(60,80,70,0.15)] animate-fade-in-up"
         style={{ animationDelay: "220ms" }}
       />
