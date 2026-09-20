@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { ChevronLeft, ChevronRight, Feather, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { listWishes, submitWish } from "@/lib/sheets.functions";
 import { toast } from "sonner";
 
 type Wish = {
-  id: string;
   name: string;
   message: string;
-  created_at: string;
+  date: string;
 };
 
 const pageStyle: React.CSSProperties = {
