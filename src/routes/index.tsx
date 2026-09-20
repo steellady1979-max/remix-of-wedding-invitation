@@ -1,37 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { GlassWater, UtensilsCrossed, MapPin, ChevronDown, Church, Volume2, VolumeX, CalendarPlus, Check, X } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import WishBook from "@/components/WishBook";
-import weddingVideoAsset from "@/assets/wedding-invitation.mp4";
-import coupleNewAsset from "@/assets/couple-new.png";
-import baghinetiArtAsset from "@/assets/baghineti-art.jpg";
+import { submitRsvp } from "@/lib/sheets.functions";
+import weddingVideoAsset from "@/assets/wedding-intro.mp4.asset.json";
+import coupleNewAsset from "@/assets/couple-elene-shota.png.asset.json";
+import dinnerVenueAsset from "@/assets/dinner-venue.jpg.asset.json";
 
-import chateauAsset from "@/assets/chateau.png";
 import envelopeAsset from "@/assets/envelope-card-clean.png";
-import churchAsset from "@/assets/church-saguramo.jpg";
 import churchArtAsset from "@/assets/church-saguramo-art.jpg";
 
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "იოსები & მარიამი — ქორწილის მოსაწვევი" },
-      { name: "description", content: "17 ოქტომბერი, 2026 — მცხეთა, რესტორანი „ბაგინეთი“" },
-      { property: "og:title", content: "იოსები & მარიამი" },
-      { property: "og:description", content: "17 ოქტომბერი, 2026 — მცხეთა, რესტორანი „ბაგინეთი“" },
+      { title: "ელენე & შოთი — ქორწილის მოსაწვევი" },
+      { name: "description", content: "3 ოქტომბერი, 2026 — ილია მართლის ტაძარი და Hotel Pool Emocia, ნატახტარი" },
+      { property: "og:title", content: "ელენე & შოთი" },
+      { property: "og:description", content: "3 ოქტომბერი, 2026 — ილია მართლის ტაძარი და Hotel Pool Emocia, ნატახტარი" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "იოსები & მარიამი" },
-      { name: "twitter:description", content: "17 ოქტომბერი, 2026 — მცხეთა, რესტორანი „ბაგინეთი“" },
+      { name: "twitter:title", content: "ელენე & შოთი" },
+      { name: "twitter:description", content: "3 ოქტომბერი, 2026 — ილია მართლის ტაძარი და Hotel Pool Emocia, ნატახტარი" },
     ],
   }),
   component: Invitation,
 });
 
-const WEDDING_DATE = new Date("2026-10-17T14:30:00+04:00").getTime();
+const WEDDING_DATE = new Date("2026-10-03T16:00:00+04:00").getTime();
 
 function useCountdown() {
   // Start with null so SSR and the first client render match; start ticking after hydration.
