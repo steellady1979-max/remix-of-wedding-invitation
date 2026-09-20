@@ -67,3 +67,27 @@ export const submitWish = createServerFn({ method: "POST" })
     await appendRow("Wishes", [nowTbilisi(), data.name, data.message]);
     return { ok: true };
   });
+
+export const listWishes = createServerFn({ method: "GET" }).handler(async () => {
+  const lovableKey = process.env["LOVABLE_API_KEY"];
+  const sheetsKey = process.env["GOOGLE_SHEETS_API_KEY"];
+  if (!lovableKey || !sheetsKey) return { wishes: [] as { date: string; name: string; message: string }[] };
+
+  const url = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/Wishes!A2:C1000`;
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${lovableKey}`,
+      "X-Connection-Api-Key": sheetsKey,
+    },
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    console.error(`Sheets read failed [${res.status}]: ${body}`);
+    return { wishes: [] as { date: string; name: string; message: string }[] };
+  }
+  const json = (await res.json()) as { values?: string[][] };
+  const wishes = (json.values ?? [])
+    .filter((r) => (r[1] ?? "").trim() && (r[2] ?? "").trim())
+    .map((r) => ({ date: r[0] ?? "", name: r[1] ?? "", message: r[2] ?? "" }));
+  return { wishes };
+});
