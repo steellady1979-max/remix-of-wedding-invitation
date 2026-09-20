@@ -524,6 +524,15 @@ function Details() {
                   <p className="font-text text-sm text-muted-foreground leading-relaxed">
                     {item.desc}
                   </p>
+                  <a
+                    href={item.map}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 text-[var(--sage-deep)] hover:opacity-80 transition-opacity"
+                  >
+                    <MapPin className="w-4 h-4 shrink-0" strokeWidth={1.5} />
+                    <span className="font-text text-xs tracking-[0.2em] uppercase">რუკაზე ნახვა</span>
+                  </a>
                 </div>
               </details>
             );
