@@ -94,17 +94,18 @@ export default function WishBook() {
       return;
     }
     setSending(true);
-    const { data, error } = await supabase
-      .from("wishes")
-      .insert({ name: name.trim(), message: message.trim() })
-      .select("id,name,message,created_at")
-      .single();
-    setSending(false);
-    if (error || !data) {
+    try {
+      await sendWish({ data: { name: name.trim(), message: message.trim() } });
+    } catch {
+      setSending(false);
       toast.error("ვერ მოხერხდა გაგზავნა, სცადეთ თავიდან");
       return;
     }
-    const next = [...wishes, data as Wish];
+    setSending(false);
+    const next = [
+      ...wishes,
+      { name: name.trim(), message: message.trim(), date: new Date().toLocaleDateString("ka-GE") },
+    ];
     setWishes(next);
     setSpread(Math.floor((next.length - 1) / perSpread));
     setName("");
