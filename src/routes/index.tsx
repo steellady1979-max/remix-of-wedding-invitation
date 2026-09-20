@@ -671,11 +671,11 @@ function Details() {
 }
 
 
-const CAL_START = "20261017T103000Z"; // 14:30 Tbilisi
-const CAL_END = "20261017T180000Z";
-const CAL_TITLE = "იოსები & მარიამის ქორწილი";
-const CAL_LOCATION = "საგურამოს წმ. ილია მართლის ტაძარი / რესტორანი „ბაგინეთი“, მცხეთა";
-const CAL_DETAILS = "14:30 ჯვრისწერა · 16:00 მიღება და ხელის მოწერა · 18:00 ვახშამი";
+const CAL_START = "20261003T120000Z"; // 16:00 Tbilisi
+const CAL_END = "20261003T190000Z";
+const CAL_TITLE = "ელენე & შოთის ქორწილი";
+const CAL_LOCATION = "ილია მართლის სახელობის ტაძარი / Hotel Pool Emocia, ნატახტარი";
+const CAL_DETAILS = "16:00 ჯვრისწერა · 17:00 ხელის მოწერის ცერემონია · 18:00 ვახშამი";
 
 function googleCalendarUrl() {
   const u = new URL("https://calendar.google.com/calendar/render");
@@ -689,6 +689,7 @@ function googleCalendarUrl() {
 
 
 function RSVPSection() {
+  const sendRsvp = useServerFn(submitRsvp);
   const [attending, setAttending] = useState<"yes" | "no" | null>(null);
   const [fullName, setFullName] = useState("");
   const [hasPlusOne, setHasPlusOne] = useState(false);
@@ -705,17 +706,23 @@ function RSVPSection() {
       return toast.error("გთხოვთ მიუთითოთ თანმხლების სახელი და გვარი");
 
     setLoading(true);
-    const { error } = await supabase.from("rsvps").insert({
-      full_name: fullName.trim(),
-      attending,
-      guests: attending === "yes" ? (hasPlusOne ? 2 : 1) : 0,
-      plus_one_name: attending === "yes" && hasPlusOne ? plusOneName.trim() : null,
-      message: message.trim() || null,
-    });
-    setLoading(false);
-    if (error) return toast.error("ვერ გაიგზავნა, სცადეთ ხელახლა");
-    setDone(true);
-    toast.success("მადლობა! თქვენი პასუხი მიღებულია");
+    try {
+      await sendRsvp({
+        data: {
+          fullName: fullName.trim(),
+          attending,
+          guests: attending === "yes" ? (hasPlusOne ? 2 : 1) : 0,
+          plusOneName: attending === "yes" && hasPlusOne ? plusOneName.trim() : null,
+          message: message.trim() || null,
+        },
+      });
+      setDone(true);
+      toast.success("მადლობა! თქვენი პასუხი მიღებულია");
+    } catch {
+      toast.error("ვერ გაიგზავნა, სცადეთ ხელახლა");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const inputClass =
