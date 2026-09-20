@@ -181,3 +181,6 @@
 @utility font-text {
   font-family: "DM Galaktioni", serif !important;
 }
+@utility font-english {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+}
