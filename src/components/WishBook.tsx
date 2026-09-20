@@ -33,7 +33,7 @@ function Page({ wish, empty }: { wish?: Wish; empty?: string }) {
             {wish.message}
           </p>
           <p className="font-text mt-auto pt-4 text-[10px] tracking-[0.25em] uppercase text-[var(--sage-deep)]/50">
-            {new Date(wish.created_at).toLocaleDateString("ka-GE")}
+            {wish.date}
           </p>
         </div>
       ) : (
@@ -48,6 +48,8 @@ function Page({ wish, empty }: { wish?: Wish; empty?: string }) {
 }
 
 export default function WishBook() {
+  const fetchWishes = useServerFn(listWishes);
+  const sendWish = useServerFn(submitWish);
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [spread, setSpread] = useState(0);
   const [flip, setFlip] = useState<"next" | "prev" | null>(null);
@@ -58,13 +60,15 @@ export default function WishBook() {
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await supabase
-        .from("wishes")
-        .select("id,name,message,created_at")
-        .order("created_at", { ascending: true });
-      if (!error && data) setWishes(data as Wish[]);
+      try {
+        const res = await fetchWishes();
+        setWishes(res.wishes);
+      } catch {
+        /* ignore */
+      }
       setLoading(false);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const perSpread = 2;
