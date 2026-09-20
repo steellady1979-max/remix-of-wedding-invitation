@@ -545,15 +545,15 @@ function Details() {
           ჯვრისწერა
         </p>
         <h2 className="font-heading text-4xl md:text-5xl text-[var(--sage-deep)] mb-3">
-          წმ. ილია მართლის ტაძარი
+          ილია მართლის სახელობის ტაძარი
         </h2>
         <p className="font-text text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
-          საგურამო, საქართველო
+          16:00 ჯვრისწერა · 17:00 ხელის მოწერის ცერემონია
         </p>
 
         <RevealImage
           src={churchArtAsset}
-          alt="საგურამოს წმ. ილია მართლის ტაძარი"
+          alt="ილია მართლის სახელობის ტაძარი"
           className="mb-8"
         />
 
@@ -565,27 +565,24 @@ function Details() {
               </span>
               <div className="min-w-0 text-left">
                 <p className="font-text text-[10px] tracking-[0.25em] uppercase text-[var(--sage-deep)]/60">მისამართი</p>
-                <p className="font-heading text-sm text-[var(--sage-deep)] truncate">საგურამოს წმ. ილია მართლის ტაძარი</p>
+                <p className="font-heading text-sm text-[var(--sage-deep)] truncate">ილია მართლის სახელობის ტაძარი</p>
               </div>
             </div>
             <div className="relative">
               <iframe
-                title="Saguramo St. Ilya Church"
-                src="https://www.google.com/maps?q=Saguramo+St+Ilya+Church&output=embed"
+                title="St Ilia the Righteous Church"
+                src="https://www.google.com/maps?q=St+Ilia+the+Righteous+Church+Saguramo&output=embed"
                 className="w-full h-[280px] md:h-[380px] grayscale-[25%] sepia-[15%] contrast-[1.03]"
                 loading="lazy"
               />
               <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(60,80,70,0.20)]" />
-            </div>
-            <div className="px-5 py-3 bg-[var(--sage)]/8 border-t border-[var(--sage)]/25">
-              <p className="font-text text-xs text-muted-foreground">საგურამო, მცხეთა-მთიანეთი</p>
             </div>
           </div>
         </div>
 
         <div className="mt-6 flex items-center justify-center">
           <a
-            href="https://maps.app.goo.gl/G4jEoZFxeuADbtju8?g_st=ic"
+            href="https://maps.app.goo.gl/MXbWbkSr4vYSyrfQ9?g_st=ic"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[var(--sage-deep)] text-primary-foreground hover:bg-[var(--sage-deep)]/90 transition-colors shadow-[0_10px_25px_rgba(60,80,70,0.25)]"
