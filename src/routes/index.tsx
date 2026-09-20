@@ -1,37 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { GlassWater, UtensilsCrossed, MapPin, ChevronDown, Church, Volume2, VolumeX, CalendarPlus, Check, X } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import WishBook from "@/components/WishBook";
-import weddingVideoAsset from "@/assets/wedding-invitation.mp4";
-import coupleNewAsset from "@/assets/couple-new.png";
-import baghinetiArtAsset from "@/assets/baghineti-art.jpg";
+import { submitRsvp } from "@/lib/sheets.functions";
+import weddingVideoAsset from "@/assets/wedding-intro.mp4.asset.json";
+import coupleNewAsset from "@/assets/couple-elene-shota.png.asset.json";
+import dinnerVenueAsset from "@/assets/dinner-venue.jpg.asset.json";
 
-import chateauAsset from "@/assets/chateau.png";
 import envelopeAsset from "@/assets/envelope-card-clean.png";
-import churchAsset from "@/assets/church-saguramo.jpg";
 import churchArtAsset from "@/assets/church-saguramo-art.jpg";
 
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "იოსები & მარიამი — ქორწილის მოსაწვევი" },
-      { name: "description", content: "17 ოქტომბერი, 2026 — მცხეთა, რესტორანი „ბაგინეთი“" },
-      { property: "og:title", content: "იოსები & მარიამი" },
-      { property: "og:description", content: "17 ოქტომბერი, 2026 — მცხეთა, რესტორანი „ბაგინეთი“" },
+      { title: "ელენე & შოთი — ქორწილის მოსაწვევი" },
+      { name: "description", content: "3 ოქტომბერი, 2026 — ილია მართლის ტაძარი და Hotel Pool Emocia, ნატახტარი" },
+      { property: "og:title", content: "ელენე & შოთი" },
+      { property: "og:description", content: "3 ოქტომბერი, 2026 — ილია მართლის ტაძარი და Hotel Pool Emocia, ნატახტარი" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "იოსები & მარიამი" },
-      { name: "twitter:description", content: "17 ოქტომბერი, 2026 — მცხეთა, რესტორანი „ბაგინეთი“" },
+      { name: "twitter:title", content: "ელენე & შოთი" },
+      { name: "twitter:description", content: "3 ოქტომბერი, 2026 — ილია მართლის ტაძარი და Hotel Pool Emocia, ნატახტარი" },
     ],
   }),
   component: Invitation,
 });
 
-const WEDDING_DATE = new Date("2026-10-17T14:30:00+04:00").getTime();
+const WEDDING_DATE = new Date("2026-10-03T16:00:00+04:00").getTime();
 
 function useCountdown() {
   // Start with null so SSR and the first client render match; start ticking after hydration.
@@ -327,7 +326,7 @@ function IntroVideo({ onFinish }: { onFinish: () => void }) {
     >
       <video
         ref={videoRef}
-        src={weddingVideoAsset}
+        src={weddingVideoAsset.url}
         autoPlay
         muted
         playsInline
@@ -369,16 +368,14 @@ function useTypewriter(text: string, active: boolean, speed = 28, delay = 0) {
   return out;
 }
 
-const ENV_TITLE = "ძვირფასო სტუმრებო";
+const ENV_TITLE = "THE BEGINNING OF FOREVER";
 const ENV_BODY =
-  `ველოდებით იმ წუთებს, როდესაც თქვენთან ერთად ვაქცევთ ამ ჯადოსნურ დღეს დაუვიწყარ მოგონებად.
+  `ჩვენი სიყვარულის ახალი დასაწყისი.
 
-ჩვენი ბედნიერება სრული არ იქნება იმ ადამიანების გარეშე, ვინც ამ გზაზე სითბოსა და სიყვარულს გვიზიარებდა.
+სიხარულით გიწვევთ ჩვენი ქორწილის აღსანიშნავად. გვინდა, ეს განსაკუთრებული დღე თქვენთან ერთად გავიზიაროთ და ჩვენი ბედნიერების თანამონაწილეები გახდეთ.
 
-სწორედ თქვენი გვერდში დგომით გახდა ეს მოგზაურობა ასეთი განსაკუთრებული.
-
-შემოგვიერთდით სიყვარულით, ღიმილითა და ბედნიერი მოგონებებით სავსე დღეს.`;
-const ENV_SIGN = "სიყვარულით, იოსები & მარიამი";
+თქვენი დასწრება ჩვენი დღის ყველაზე ლამაზი ნაწილი იქნება.`;
+const ENV_SIGN = "სიყვარულით, ელენე და შოთი";
 
 function EnvelopeMessage() {
   const ref = useRef<HTMLDivElement>(null);
@@ -413,7 +410,7 @@ function EnvelopeMessage() {
         />
         <div className="absolute inset-0">
           <div className="absolute left-1/2 -translate-x-1/2 top-[19%] w-[68%] text-center">
-            <p className="font-heading text-[4.2vw] sm:text-[19px] md:text-[22px] leading-[1.35] text-[#3f3a33] min-h-[1.35em]">
+            <p className="font-english uppercase tracking-[0.18em] text-[3.4vw] sm:text-[16px] md:text-[19px] leading-[1.35] text-[#3f3a33] min-h-[1.35em]">
               {title}
             </p>
             <p className="font-text whitespace-pre-line text-[2.55vw] sm:text-[12px] md:text-[13.5px] leading-[1.7] text-[#4a443c] mt-[4%]">
@@ -423,6 +420,7 @@ function EnvelopeMessage() {
               {sign}
             </p>
           </div>
+
 
         </div>
       </div>
@@ -437,23 +435,22 @@ function Details() {
 
       <header className="text-center max-w-3xl animate-fade-in-up" style={{ animationDelay: "80ms" }}>
         <h1 className="font-heading text-6xl md:text-8xl leading-[1.05] text-[var(--sage-deep)]">
-          იოსები
+          ელენე
           <span className="block text-3xl md:text-5xl my-2 text-[var(--gold)] animate-gentle-float" style={{ animationDelay: "1.2s" }}>&</span>
-          მარიამი
+          შოთი
         </h1>
         <div className="flex items-center justify-center gap-4 mt-8 mb-4">
           <span className="h-px w-16 md:w-24 bg-[var(--sage-deep)]/40" />
           <p className="font-text text-base md:text-lg tracking-[0.25em] uppercase text-foreground/80">
-            17 · 10 · 2026
+            03 · 10 · 2026
           </p>
           <span className="h-px w-16 md:w-24 bg-[var(--sage-deep)]/40" />
         </div>
       </header>
 
       <img
-        src={coupleNewAsset}
-
-        alt="იოსები და მარიამი"
+        src={coupleNewAsset.url}
+        alt="ელენე და შოთი"
         className="w-[min(80vw,380px)] h-auto my-8 md:my-10 drop-shadow-[0_15px_30px_rgba(60,80,70,0.15)] animate-fade-in-up"
         style={{ animationDelay: "220ms" }}
       />
@@ -501,9 +498,9 @@ function Details() {
         {/* Minimal collapsible timeline */}
         <div className="max-w-2xl mx-auto divide-y divide-[var(--sage-deep)]/15 border-y border-[var(--sage-deep)]/15">
           {[
-            { time: "14:30", icon: Church, title: "ჯვრისწერა", sub: "საგურამოს წმ. ილია მართლის ტაძარი", desc: "ჩვენი სიყვარულის ოფიციალური დასაწყისი — ჯვრისწერა საგურამოს წმინდა ილია მართლის ტაძარში, ოჯახისა და ახლობლების გარემოცვაში." },
-            { time: "16:00", icon: GlassWater, title: "მიღება და ხელის მოწერა", sub: "რესტორანი „ბაგინეთი“, მცხეთა", desc: "მცხეთის ისტორიული ხედების ფონზე დაგვხვდებით ღვინით, კოქტეილებითა და სასიამოვნო გარემოთი. აქვე შევდგება ხელისმოწერის ცერემონია." },
-            { time: "18:00", icon: UtensilsCrossed, title: "ვახშამი", sub: "რესტორანი „ბაგინეთი“, მცხეთა", desc: "დახვეწილი საღამო, გემრიელი მენიუ, ღვინო და დაუვიწყარი მოგონებები მცხეთის გულში." },
+            { time: "16:00", icon: Church, title: "ჯვრისწერა", sub: "ილია მართლის სახელობის ტაძარი", desc: "ჩვენი სიყვარულის ოფიციალური დასაწყისი — ჯვრისწერა ილია მართლის სახელობის ტაძარში, ოჯახისა და ახლობლების გარემოცვაში.", map: "https://maps.app.goo.gl/MXbWbkSr4vYSyrfQ9?g_st=ic" },
+            { time: "17:00", icon: GlassWater, title: "ხელის მოწერის ცერემონია", sub: "ილია მართლის სახელობის ტაძარი", desc: "ჯვრისწერის შემდეგ, იქვე გაიმართება ხელის მოწერის ცერემონია.", map: "https://maps.app.goo.gl/MXbWbkSr4vYSyrfQ9?g_st=ic" },
+            { time: "18:00", icon: UtensilsCrossed, title: "ვახშამი", sub: "Hotel Pool Emocia, ნატახტარი", desc: "დახვეწილი საღამო, გემრიელი მენიუ, მუსიკა და დაუვიწყარი მოგონებები ნატახტარში.", map: "https://maps.app.goo.gl/8L3QGvDhSGaWb8TNA?g_st=ic" },
           ].map((item, i) => {
             const Icon = item.icon;
             return (
@@ -527,6 +524,15 @@ function Details() {
                   <p className="font-text text-sm text-muted-foreground leading-relaxed">
                     {item.desc}
                   </p>
+                  <a
+                    href={item.map}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 text-[var(--sage-deep)] hover:opacity-80 transition-opacity"
+                  >
+                    <MapPin className="w-4 h-4 shrink-0" strokeWidth={1.5} />
+                    <span className="font-text text-xs tracking-[0.2em] uppercase">რუკაზე ნახვა</span>
+                  </a>
                 </div>
               </details>
             );
@@ -539,15 +545,15 @@ function Details() {
           ჯვრისწერა
         </p>
         <h2 className="font-heading text-4xl md:text-5xl text-[var(--sage-deep)] mb-3">
-          წმ. ილია მართლის ტაძარი
+          ილია მართლის სახელობის ტაძარი
         </h2>
         <p className="font-text text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
-          საგურამო, საქართველო
+          16:00 ჯვრისწერა · 17:00 ხელის მოწერის ცერემონია
         </p>
 
         <RevealImage
           src={churchArtAsset}
-          alt="საგურამოს წმ. ილია მართლის ტაძარი"
+          alt="ილია მართლის სახელობის ტაძარი"
           className="mb-8"
         />
 
@@ -559,27 +565,24 @@ function Details() {
               </span>
               <div className="min-w-0 text-left">
                 <p className="font-text text-[10px] tracking-[0.25em] uppercase text-[var(--sage-deep)]/60">მისამართი</p>
-                <p className="font-heading text-sm text-[var(--sage-deep)] truncate">საგურამოს წმ. ილია მართლის ტაძარი</p>
+                <p className="font-heading text-sm text-[var(--sage-deep)] truncate">ილია მართლის სახელობის ტაძარი</p>
               </div>
             </div>
             <div className="relative">
               <iframe
-                title="Saguramo St. Ilya Church"
-                src="https://www.google.com/maps?q=Saguramo+St+Ilya+Church&output=embed"
+                title="St Ilia the Righteous Church"
+                src="https://www.google.com/maps?q=St+Ilia+the+Righteous+Church+Saguramo&output=embed"
                 className="w-full h-[280px] md:h-[380px] grayscale-[25%] sepia-[15%] contrast-[1.03]"
                 loading="lazy"
               />
               <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(60,80,70,0.20)]" />
-            </div>
-            <div className="px-5 py-3 bg-[var(--sage)]/8 border-t border-[var(--sage)]/25">
-              <p className="font-text text-xs text-muted-foreground">საგურამო, მცხეთა-მთიანეთი</p>
             </div>
           </div>
         </div>
 
         <div className="mt-6 flex items-center justify-center">
           <a
-            href="https://maps.app.goo.gl/G4jEoZFxeuADbtju8?g_st=ic"
+            href="https://maps.app.goo.gl/MXbWbkSr4vYSyrfQ9?g_st=ic"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[var(--sage-deep)] text-primary-foreground hover:bg-[var(--sage-deep)]/90 transition-colors shadow-[0_10px_25px_rgba(60,80,70,0.25)]"
@@ -595,19 +598,17 @@ function Details() {
             ლოკაცია
           </p>
           <h3 className="font-heading text-3xl md:text-4xl text-[var(--sage-deep)] mb-3">
-            რესტორანი „ბაგინეთი“
+            Hotel Pool Emocia
           </h3>
           <p className="font-text text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
-            მცხეთა, საქართველო
+            ვახშამი 18:00 · ნატახტარი, საქართველო
           </p>
 
           <RevealImage
-            src={baghinetiArtAsset}
-            alt="რესტორანი ბაგინეთი — ჯვრისწერის თაღი"
+            src={dinnerVenueAsset.url}
+            alt="Hotel Pool Emocia — ვახშმის ლოკაცია"
             className="mb-8"
           />
-
-
 
           <div className="relative rounded-[28px] p-[6px] bg-[linear-gradient(140deg,color-mix(in_oklab,var(--sage)_45%,transparent),transparent_45%,color-mix(in_oklab,var(--gold)_35%,transparent))] shadow-[0_30px_70px_rgba(60,80,70,0.22)]">
             <div className="relative rounded-[22px] overflow-hidden border border-[var(--sage)]/40 bg-card">
@@ -617,27 +618,27 @@ function Details() {
                 </span>
                 <div className="min-w-0 text-left">
                   <p className="font-text text-[10px] tracking-[0.25em] uppercase text-[var(--sage-deep)]/60">მისამართი</p>
-                  <p className="font-heading text-sm text-[var(--sage-deep)] truncate">რესტორანი „ბაგინეთი“</p>
+                  <p className="font-heading text-sm text-[var(--sage-deep)] truncate">Hotel Pool Emocia, ნატახტარი</p>
                 </div>
               </div>
               <div className="relative">
                 <iframe
-                  title="Restaurant Bagineti"
-                  src="https://www.google.com/maps?q=Bagineti+Mtskheta&output=embed"
+                  title="Hotel Pool Emocia"
+                  src="https://www.google.com/maps?q=Hotel+Pool+Emocia+Natakhtari&output=embed"
                   className="w-full h-[300px] md:h-[420px] grayscale-[25%] sepia-[15%] contrast-[1.03]"
                   loading="lazy"
                 />
                 <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(60,80,70,0.20)]" />
               </div>
               <div className="px-5 py-3 bg-[var(--sage)]/8 border-t border-[var(--sage)]/25">
-                <p className="font-text text-xs text-muted-foreground">მცხეთა, საქართველო</p>
+                <p className="font-text text-xs text-muted-foreground">ნატახტარი, საქართველო</p>
               </div>
             </div>
           </div>
 
           <div className="mt-6 flex items-center justify-center">
             <a
-              href="https://maps.app.goo.gl/BM3G4zawFsmjsckJ8?g_st=ic"
+              href="https://maps.app.goo.gl/8L3QGvDhSGaWb8TNA?g_st=ic"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[var(--sage-deep)] text-primary-foreground hover:bg-[var(--sage-deep)]/90 transition-colors shadow-[0_10px_25px_rgba(60,80,70,0.25)]"
@@ -670,11 +671,11 @@ function Details() {
 }
 
 
-const CAL_START = "20261017T103000Z"; // 14:30 Tbilisi
-const CAL_END = "20261017T180000Z";
-const CAL_TITLE = "იოსები & მარიამის ქორწილი";
-const CAL_LOCATION = "საგურამოს წმ. ილია მართლის ტაძარი / რესტორანი „ბაგინეთი“, მცხეთა";
-const CAL_DETAILS = "14:30 ჯვრისწერა · 16:00 მიღება და ხელის მოწერა · 18:00 ვახშამი";
+const CAL_START = "20261003T120000Z"; // 16:00 Tbilisi
+const CAL_END = "20261003T190000Z";
+const CAL_TITLE = "ელენე & შოთის ქორწილი";
+const CAL_LOCATION = "ილია მართლის სახელობის ტაძარი / Hotel Pool Emocia, ნატახტარი";
+const CAL_DETAILS = "16:00 ჯვრისწერა · 17:00 ხელის მოწერის ცერემონია · 18:00 ვახშამი";
 
 function googleCalendarUrl() {
   const u = new URL("https://calendar.google.com/calendar/render");
@@ -688,6 +689,7 @@ function googleCalendarUrl() {
 
 
 function RSVPSection() {
+  const sendRsvp = useServerFn(submitRsvp);
   const [attending, setAttending] = useState<"yes" | "no" | null>(null);
   const [fullName, setFullName] = useState("");
   const [hasPlusOne, setHasPlusOne] = useState(false);
@@ -704,17 +706,23 @@ function RSVPSection() {
       return toast.error("გთხოვთ მიუთითოთ თანმხლების სახელი და გვარი");
 
     setLoading(true);
-    const { error } = await supabase.from("rsvps").insert({
-      full_name: fullName.trim(),
-      attending,
-      guests: attending === "yes" ? (hasPlusOne ? 2 : 1) : 0,
-      plus_one_name: attending === "yes" && hasPlusOne ? plusOneName.trim() : null,
-      message: message.trim() || null,
-    });
-    setLoading(false);
-    if (error) return toast.error("ვერ გაიგზავნა, სცადეთ ხელახლა");
-    setDone(true);
-    toast.success("მადლობა! თქვენი პასუხი მიღებულია");
+    try {
+      await sendRsvp({
+        data: {
+          fullName: fullName.trim(),
+          attending,
+          guests: attending === "yes" ? (hasPlusOne ? 2 : 1) : 0,
+          plusOneName: attending === "yes" && hasPlusOne ? plusOneName.trim() : null,
+          message: message.trim() || null,
+        },
+      });
+      setDone(true);
+      toast.success("მადლობა! თქვენი პასუხი მიღებულია");
+    } catch {
+      toast.error("ვერ გაიგზავნა, სცადეთ ხელახლა");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const inputClass =

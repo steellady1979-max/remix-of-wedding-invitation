@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { ChevronLeft, ChevronRight, Feather, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { listWishes, submitWish } from "@/lib/sheets.functions";
 import { toast } from "sonner";
 
 type Wish = {
-  id: string;
   name: string;
   message: string;
-  created_at: string;
+  date: string;
 };
 
 const pageStyle: React.CSSProperties = {
@@ -33,7 +33,7 @@ function Page({ wish, empty }: { wish?: Wish; empty?: string }) {
             {wish.message}
           </p>
           <p className="font-text mt-auto pt-4 text-[10px] tracking-[0.25em] uppercase text-[var(--sage-deep)]/50">
-            {new Date(wish.created_at).toLocaleDateString("ka-GE")}
+            {wish.date}
           </p>
         </div>
       ) : (
@@ -48,6 +48,8 @@ function Page({ wish, empty }: { wish?: Wish; empty?: string }) {
 }
 
 export default function WishBook() {
+  const fetchWishes = useServerFn(listWishes);
+  const sendWish = useServerFn(submitWish);
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [spread, setSpread] = useState(0);
   const [flip, setFlip] = useState<"next" | "prev" | null>(null);
@@ -58,13 +60,15 @@ export default function WishBook() {
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await supabase
-        .from("wishes")
-        .select("id,name,message,created_at")
-        .order("created_at", { ascending: true });
-      if (!error && data) setWishes(data as Wish[]);
+      try {
+        const res = await fetchWishes();
+        setWishes(res.wishes);
+      } catch {
+        /* ignore */
+      }
       setLoading(false);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const perSpread = 2;
@@ -90,17 +94,18 @@ export default function WishBook() {
       return;
     }
     setSending(true);
-    const { data, error } = await supabase
-      .from("wishes")
-      .insert({ name: name.trim(), message: message.trim() })
-      .select("id,name,message,created_at")
-      .single();
-    setSending(false);
-    if (error || !data) {
+    try {
+      await sendWish({ data: { name: name.trim(), message: message.trim() } });
+    } catch {
+      setSending(false);
       toast.error("ვერ მოხერხდა გაგზავნა, სცადეთ თავიდან");
       return;
     }
-    const next = [...wishes, data as Wish];
+    setSending(false);
+    const next = [
+      ...wishes,
+      { name: name.trim(), message: message.trim(), date: new Date().toLocaleDateString("ka-GE") },
+    ];
     setWishes(next);
     setSpread(Math.floor((next.length - 1) / perSpread));
     setName("");
