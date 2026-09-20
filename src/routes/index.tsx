@@ -522,7 +522,11 @@ function Details() {
                   <ChevronDown className="w-4 h-4 text-[var(--sage-deep)]/60 transition-transform duration-300 group-open:rotate-180 shrink-0" strokeWidth={1.5} />
                 </summary>
                 <div className="pl-16 pr-4 pb-5 text-left animate-in fade-in slide-in-from-top-1 duration-300">
-                  <p className="font-text text-[11px] tracking-[0.2em] uppercase text-[var(--rose)] mb-2">
+                  <p
+                    className={`text-[11px] tracking-[0.2em] uppercase text-[var(--rose)] mb-2 ${
+                      /[A-Za-z]/.test(item.sub) ? "font-english" : "font-text"
+                    }`}
+                  >
                     {item.sub}
                   </p>
                   <p className="font-text text-sm text-muted-foreground leading-relaxed">
