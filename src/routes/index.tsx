@@ -6,9 +6,9 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import WishBook from "@/components/WishBook";
 import { submitRsvp } from "@/lib/sheets.functions";
-import weddingVideoAsset from "@/assets/wedding-intro.mp4.asset.json";
-import coupleNewAsset from "@/assets/couple-elene-shota.png.asset.json";
-import dinnerVenueAsset from "@/assets/dinner-venue.jpg.asset.json";
+import weddingVideoAsset from "@/assets/wedding-intro.mp4";
+import coupleNewAsset from "@/assets/couple-elene-shota.png";
+import dinnerVenueAsset from "@/assets/dinner-venue.jpg";
 
 import envelopeAsset from "@/assets/envelope-card-clean.png";
 import churchArtAsset from "@/assets/church-saguramo-art.jpg";
@@ -326,7 +326,7 @@ function IntroVideo({ onFinish }: { onFinish: () => void }) {
     >
       <video
         ref={videoRef}
-        src={weddingVideoAsset.url}
+        src={weddingVideoAsset}
         autoPlay
         muted
         playsInline
@@ -453,7 +453,7 @@ function Details() {
       </header>
 
       <img
-        src={coupleNewAsset.url}
+        src={coupleNewAsset}
         alt="ელენე და შოთი"
         className="w-[min(80vw,380px)] h-auto my-8 md:my-10 drop-shadow-[0_15px_30px_rgba(150,95,110,0.15)] animate-fade-in-up"
         style={{ animationDelay: "220ms" }}
@@ -613,7 +613,7 @@ function Details() {
           </p>
 
           <RevealImage
-            src={dinnerVenueAsset.url}
+            src={dinnerVenueAsset}
             alt="Hotel Pool Emocia — ვახშმის ლოკაცია"
             className="mb-8"
           />
