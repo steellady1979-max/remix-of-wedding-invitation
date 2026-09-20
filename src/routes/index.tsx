@@ -368,16 +368,14 @@ function useTypewriter(text: string, active: boolean, speed = 28, delay = 0) {
   return out;
 }
 
-const ENV_TITLE = "ძვირფასო სტუმრებო";
+const ENV_TITLE = "THE BEGINNING OF FOREVER";
 const ENV_BODY =
-  `ველოდებით იმ წუთებს, როდესაც თქვენთან ერთად ვაქცევთ ამ ჯადოსნურ დღეს დაუვიწყარ მოგონებად.
+  `ჩვენი სიყვარულის ახალი დასაწყისი.
 
-ჩვენი ბედნიერება სრული არ იქნება იმ ადამიანების გარეშე, ვინც ამ გზაზე სითბოსა და სიყვარულს გვიზიარებდა.
+სიხარულით გიწვევთ ჩვენი ქორწილის აღსანიშნავად. გვინდა, ეს განსაკუთრებული დღე თქვენთან ერთად გავიზიაროთ და ჩვენი ბედნიერების თანამონაწილეები გახდეთ.
 
-სწორედ თქვენი გვერდში დგომით გახდა ეს მოგზაურობა ასეთი განსაკუთრებული.
-
-შემოგვიერთდით სიყვარულით, ღიმილითა და ბედნიერი მოგონებებით სავსე დღეს.`;
-const ENV_SIGN = "სიყვარულით, იოსები & მარიამი";
+თქვენი დასწრება ჩვენი დღის ყველაზე ლამაზი ნაწილი იქნება.`;
+const ENV_SIGN = "სიყვარულით, ელენე და შოთი";
 
 function EnvelopeMessage() {
   const ref = useRef<HTMLDivElement>(null);
@@ -412,7 +410,7 @@ function EnvelopeMessage() {
         />
         <div className="absolute inset-0">
           <div className="absolute left-1/2 -translate-x-1/2 top-[19%] w-[68%] text-center">
-            <p className="font-heading text-[4.2vw] sm:text-[19px] md:text-[22px] leading-[1.35] text-[#3f3a33] min-h-[1.35em]">
+            <p className="font-english uppercase tracking-[0.18em] text-[3.4vw] sm:text-[16px] md:text-[19px] leading-[1.35] text-[#3f3a33] min-h-[1.35em]">
               {title}
             </p>
             <p className="font-text whitespace-pre-line text-[2.55vw] sm:text-[12px] md:text-[13.5px] leading-[1.7] text-[#4a443c] mt-[4%]">
@@ -422,6 +420,7 @@ function EnvelopeMessage() {
               {sign}
             </p>
           </div>
+
 
         </div>
       </div>
