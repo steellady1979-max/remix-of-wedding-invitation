@@ -396,9 +396,9 @@ function EnvelopeMessage() {
     return () => io.disconnect();
   }, []);
 
-  const title = useTypewriter(ENV_TITLE, active, 60, 200);
-  const body = useTypewriter(ENV_BODY, active, 22, 1400);
-  const sign = useTypewriter(ENV_SIGN, active, 55, 1400 + ENV_BODY.length * 22 + 500);
+  // English title appears at once (a gentle fade), Georgian text then types out.
+  const body = useTypewriter(ENV_BODY, active, 22, 700);
+  const sign = useTypewriter(ENV_SIGN, active, 55, 700 + ENV_BODY.length * 22 + 500);
 
   return (
     <section ref={ref} className="w-full mt-20 md:mt-28 flex justify-center">
@@ -410,8 +410,12 @@ function EnvelopeMessage() {
         />
         <div className="absolute inset-0">
           <div className="absolute left-1/2 -translate-x-1/2 top-[19%] w-[68%] text-center">
-            <p className="font-english uppercase tracking-[0.18em] text-[3.4vw] sm:text-[16px] md:text-[19px] leading-[1.35] text-[#3f3a33] min-h-[1.35em]">
-              {title}
+            <p
+              className={`font-english uppercase tracking-[0.22em] text-[3.4vw] sm:text-[16px] md:text-[19px] leading-[1.35] text-[#6d3b44] min-h-[1.35em] transition-opacity duration-700 ${
+                active ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {ENV_TITLE}
             </p>
             <p className="font-text whitespace-pre-line text-[2.55vw] sm:text-[12px] md:text-[13.5px] leading-[1.7] text-[#4a443c] mt-[4%]">
               {body}
@@ -730,7 +734,6 @@ function RSVPSection() {
 
   return (
     <section className="mt-20 md:mt-28 px-4 max-w-2xl mx-auto text-center">
-      <p className="font-text text-xs tracking-[0.4em] uppercase text-[var(--sage-deep)]/70 mb-4">RSVP</p>
       <h3 className="font-galaktioni text-4xl md:text-5xl text-[var(--gold)] mb-8">შეძლებთ მობრძანებას?</h3>
 
       {done ? (
