@@ -498,9 +498,9 @@ function Details() {
         {/* Minimal collapsible timeline */}
         <div className="max-w-2xl mx-auto divide-y divide-[var(--sage-deep)]/15 border-y border-[var(--sage-deep)]/15">
           {[
-            { time: "14:30", icon: Church, title: "ჯვრისწერა", sub: "საგურამოს წმ. ილია მართლის ტაძარი", desc: "ჩვენი სიყვარულის ოფიციალური დასაწყისი — ჯვრისწერა საგურამოს წმინდა ილია მართლის ტაძარში, ოჯახისა და ახლობლების გარემოცვაში." },
-            { time: "16:00", icon: GlassWater, title: "მიღება და ხელის მოწერა", sub: "რესტორანი „ბაგინეთი“, მცხეთა", desc: "მცხეთის ისტორიული ხედების ფონზე დაგვხვდებით ღვინით, კოქტეილებითა და სასიამოვნო გარემოთი. აქვე შევდგება ხელისმოწერის ცერემონია." },
-            { time: "18:00", icon: UtensilsCrossed, title: "ვახშამი", sub: "რესტორანი „ბაგინეთი“, მცხეთა", desc: "დახვეწილი საღამო, გემრიელი მენიუ, ღვინო და დაუვიწყარი მოგონებები მცხეთის გულში." },
+            { time: "16:00", icon: Church, title: "ჯვრისწერა", sub: "ილია მართლის სახელობის ტაძარი", desc: "ჩვენი სიყვარულის ოფიციალური დასაწყისი — ჯვრისწერა ილია მართლის სახელობის ტაძარში, ოჯახისა და ახლობლების გარემოცვაში.", map: "https://maps.app.goo.gl/MXbWbkSr4vYSyrfQ9?g_st=ic" },
+            { time: "17:00", icon: GlassWater, title: "ხელის მოწერის ცერემონია", sub: "ილია მართლის სახელობის ტაძარი", desc: "ჯვრისწერის შემდეგ, იქვე გაიმართება ხელის მოწერის ცერემონია.", map: "https://maps.app.goo.gl/MXbWbkSr4vYSyrfQ9?g_st=ic" },
+            { time: "18:00", icon: UtensilsCrossed, title: "ვახშამი", sub: "Hotel Pool Emocia, ნატახტარი", desc: "დახვეწილი საღამო, გემრიელი მენიუ, მუსიკა და დაუვიწყარი მოგონებები ნატახტარში.", map: "https://maps.app.goo.gl/8L3QGvDhSGaWb8TNA?g_st=ic" },
           ].map((item, i) => {
             const Icon = item.icon;
             return (
