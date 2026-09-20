@@ -504,7 +504,7 @@ function Details() {
           {[
             { time: "16:00", icon: Church, title: "ჯვრისწერა", sub: "ილია მართლის სახელობის ტაძარი", desc: "ჩვენი სიყვარულის ოფიციალური დასაწყისი — ჯვრისწერა ილია მართლის სახელობის ტაძარში, ოჯახისა და ახლობლების გარემოცვაში.", map: "https://maps.app.goo.gl/MXbWbkSr4vYSyrfQ9?g_st=ic" },
             { time: "17:00", icon: GlassWater, title: "ხელის მოწერის ცერემონია", sub: "ილია მართლის სახელობის ტაძარი", desc: "ჯვრისწერის შემდეგ, იქვე გაიმართება ხელის მოწერის ცერემონია.", map: "https://maps.app.goo.gl/MXbWbkSr4vYSyrfQ9?g_st=ic" },
-            { time: "18:00", icon: UtensilsCrossed, title: "ვახშამი", sub: "Hotel Pool Emocia, ნატახტარი", subEn: true, desc: "დახვეწილი საღამო, გემრიელი მენიუ, მუსიკა და დაუვიწყარი მოგონებები ნატახტარში.", map: "https://maps.app.goo.gl/8L3QGvDhSGaWb8TNA?g_st=ic" },
+            { time: "18:00", icon: UtensilsCrossed, title: "ვახშამი", sub: "Hotel Pool Emocia, ნატახტარი", desc: "დახვეწილი საღამო, გემრიელი მენიუ, მუსიკა და დაუვიწყარი მოგონებები ნატახტარში.", map: "https://maps.app.goo.gl/8L3QGvDhSGaWb8TNA?g_st=ic" },
           ].map((item, i) => {
             const Icon = item.icon;
             return (
