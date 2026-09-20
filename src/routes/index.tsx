@@ -211,7 +211,7 @@ function BackgroundMusic({ playing, onToggle }: { playing: boolean; onToggle: ()
       <button
         onClick={onToggle}
         aria-label={playing ? "მუსიკის გამორთვა" : "მუსიკის ჩართვა"}
-        className="fixed bottom-5 right-5 z-50 grid place-items-center w-11 h-11 rounded-full bg-card/80 backdrop-blur-sm border border-[var(--sage-deep)]/25 text-[var(--sage-deep)] shadow-[0_8px_24px_rgba(60,80,70,0.18)]"
+        className="fixed bottom-5 right-5 z-50 grid place-items-center w-11 h-11 rounded-full bg-card/80 backdrop-blur-sm border border-[var(--sage-deep)]/25 text-[var(--sage-deep)] shadow-[0_8px_24px_rgba(150,95,110,0.18)]"
       >
         {playing ? <Volume2 className="w-5 h-5" strokeWidth={1.5} /> : <VolumeX className="w-5 h-5" strokeWidth={1.5} />}
       </button>
@@ -241,7 +241,7 @@ function RevealImage({ src, alt, className = "" }: { src: string; alt: string; c
   return (
     <div
       ref={ref}
-      className={`overflow-hidden rounded-3xl border border-[var(--sage)]/50 shadow-[0_25px_60px_rgba(60,80,70,0.18)] transition-all duration-[1400ms] ease-out ${
+      className={`overflow-hidden rounded-3xl border border-[var(--sage)]/50 shadow-[0_25px_60px_rgba(150,95,110,0.18)] transition-all duration-[1400ms] ease-out ${
         shown ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-10 blur-[6px]"
       } ${className}`}
     >
@@ -396,9 +396,9 @@ function EnvelopeMessage() {
     return () => io.disconnect();
   }, []);
 
-  const title = useTypewriter(ENV_TITLE, active, 60, 200);
-  const body = useTypewriter(ENV_BODY, active, 22, 1400);
-  const sign = useTypewriter(ENV_SIGN, active, 55, 1400 + ENV_BODY.length * 22 + 500);
+  // English title appears at once (a gentle fade), Georgian text then types out.
+  const body = useTypewriter(ENV_BODY, active, 22, 700);
+  const sign = useTypewriter(ENV_SIGN, active, 55, 700 + ENV_BODY.length * 22 + 500);
 
   return (
     <section ref={ref} className="w-full mt-20 md:mt-28 flex justify-center">
@@ -406,12 +406,16 @@ function EnvelopeMessage() {
         <img
           src={envelopeAsset}
           alt="მოსაწვევი კონვერტი"
-          className="w-full h-auto select-none pointer-events-none drop-shadow-[0_20px_45px_rgba(60,80,70,0.18)]"
+          className="w-full h-auto select-none pointer-events-none drop-shadow-[0_20px_45px_rgba(150,95,110,0.18)]"
         />
         <div className="absolute inset-0">
           <div className="absolute left-1/2 -translate-x-1/2 top-[19%] w-[68%] text-center">
-            <p className="font-english uppercase tracking-[0.18em] text-[3.4vw] sm:text-[16px] md:text-[19px] leading-[1.35] text-[#3f3a33] min-h-[1.35em]">
-              {title}
+            <p
+              className={`font-english uppercase tracking-[0.22em] text-[3.4vw] sm:text-[16px] md:text-[19px] leading-[1.35] text-[#6d3b44] min-h-[1.35em] transition-opacity duration-700 ${
+                active ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {ENV_TITLE}
             </p>
             <p className="font-text whitespace-pre-line text-[2.55vw] sm:text-[12px] md:text-[13.5px] leading-[1.7] text-[#4a443c] mt-[4%]">
               {body}
@@ -451,7 +455,7 @@ function Details() {
       <img
         src={coupleNewAsset.url}
         alt="ელენე და შოთი"
-        className="w-[min(80vw,380px)] h-auto my-8 md:my-10 drop-shadow-[0_15px_30px_rgba(60,80,70,0.15)] animate-fade-in-up"
+        className="w-[min(80vw,380px)] h-auto my-8 md:my-10 drop-shadow-[0_15px_30px_rgba(150,95,110,0.15)] animate-fade-in-up"
         style={{ animationDelay: "220ms" }}
       />
 
@@ -468,7 +472,7 @@ function Details() {
           ].map((u, i) => (
             <div
               key={u.l}
-              className="rounded-2xl bg-card/60 backdrop-blur-sm border border-[var(--sage)]/40 py-4 md:py-6 shadow-[0_8px_24px_rgba(60,80,70,0.08)] animate-fade-in-up"
+              className="rounded-2xl bg-card/60 backdrop-blur-sm border border-[var(--sage)]/40 py-4 md:py-6 shadow-[0_8px_24px_rgba(150,95,110,0.08)] animate-fade-in-up"
               style={{ animationDelay: `${420 + i * 90}ms` }}
             >
               <div className="font-heading text-3xl md:text-5xl text-[var(--sage-deep)] tabular-nums">
@@ -518,7 +522,11 @@ function Details() {
                   <ChevronDown className="w-4 h-4 text-[var(--sage-deep)]/60 transition-transform duration-300 group-open:rotate-180 shrink-0" strokeWidth={1.5} />
                 </summary>
                 <div className="pl-16 pr-4 pb-5 text-left animate-in fade-in slide-in-from-top-1 duration-300">
-                  <p className="font-text text-[11px] tracking-[0.2em] uppercase text-[var(--rose)] mb-2">
+                  <p
+                    className={`text-[11px] tracking-[0.2em] uppercase text-[var(--rose)] mb-2 ${
+                      /[A-Za-z]/.test(item.sub) ? "font-english" : "font-text"
+                    }`}
+                  >
                     {item.sub}
                   </p>
                   <p className="font-text text-sm text-muted-foreground leading-relaxed">
@@ -557,7 +565,7 @@ function Details() {
           className="mb-8"
         />
 
-        <div className="relative rounded-[28px] p-[6px] bg-[linear-gradient(140deg,color-mix(in_oklab,var(--sage)_45%,transparent),transparent_45%,color-mix(in_oklab,var(--gold)_35%,transparent))] shadow-[0_30px_70px_rgba(60,80,70,0.22)]">
+        <div className="relative rounded-[28px] p-[6px] bg-[linear-gradient(140deg,color-mix(in_oklab,var(--sage)_45%,transparent),transparent_45%,color-mix(in_oklab,var(--gold)_35%,transparent))] shadow-[0_30px_70px_rgba(150,95,110,0.22)]">
           <div className="relative rounded-[22px] overflow-hidden border border-[var(--sage)]/40 bg-card">
             <div className="flex items-center gap-3 px-5 py-4 bg-[linear-gradient(to_right,color-mix(in_oklab,var(--sage)_18%,transparent),transparent)] border-b border-[var(--sage)]/25">
               <span className="grid place-items-center w-10 h-10 shrink-0 rounded-full bg-[var(--sage-deep)]/10 text-[var(--sage-deep)] ring-1 ring-[var(--sage)]/40">
@@ -575,7 +583,7 @@ function Details() {
                 className="w-full h-[280px] md:h-[380px] grayscale-[25%] sepia-[15%] contrast-[1.03]"
                 loading="lazy"
               />
-              <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(60,80,70,0.20)]" />
+              <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(150,95,110,0.20)]" />
             </div>
           </div>
         </div>
@@ -585,7 +593,7 @@ function Details() {
             href="https://maps.app.goo.gl/MXbWbkSr4vYSyrfQ9?g_st=ic"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[var(--sage-deep)] text-primary-foreground hover:bg-[var(--sage-deep)]/90 transition-colors shadow-[0_10px_25px_rgba(60,80,70,0.25)]"
+            className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[var(--sage-deep)] text-primary-foreground hover:bg-[var(--sage-deep)]/90 transition-colors shadow-[0_10px_25px_rgba(150,95,110,0.25)]"
           >
             <MapPin className="w-5 h-5 shrink-0" strokeWidth={1.5} />
             <span className="font-text text-sm tracking-[0.25em] uppercase">რუკაზე ნახვა</span>
@@ -597,7 +605,7 @@ function Details() {
           <p className="font-text text-xs tracking-[0.4em] uppercase text-[var(--sage-deep)]/70 mb-4">
             ლოკაცია
           </p>
-          <h3 className="font-heading text-3xl md:text-4xl text-[var(--sage-deep)] mb-3">
+          <h3 className="font-english text-3xl md:text-4xl tracking-[0.06em] text-[var(--sage-deep)] mb-3">
             Hotel Pool Emocia
           </h3>
           <p className="font-text text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
@@ -610,7 +618,7 @@ function Details() {
             className="mb-8"
           />
 
-          <div className="relative rounded-[28px] p-[6px] bg-[linear-gradient(140deg,color-mix(in_oklab,var(--sage)_45%,transparent),transparent_45%,color-mix(in_oklab,var(--gold)_35%,transparent))] shadow-[0_30px_70px_rgba(60,80,70,0.22)]">
+          <div className="relative rounded-[28px] p-[6px] bg-[linear-gradient(140deg,color-mix(in_oklab,var(--sage)_45%,transparent),transparent_45%,color-mix(in_oklab,var(--gold)_35%,transparent))] shadow-[0_30px_70px_rgba(150,95,110,0.22)]">
             <div className="relative rounded-[22px] overflow-hidden border border-[var(--sage)]/40 bg-card">
               <div className="flex items-center gap-3 px-5 py-4 bg-[linear-gradient(to_right,color-mix(in_oklab,var(--sage)_18%,transparent),transparent)] border-b border-[var(--sage)]/25">
                 <span className="grid place-items-center w-10 h-10 shrink-0 rounded-full bg-[var(--sage-deep)]/10 text-[var(--sage-deep)] ring-1 ring-[var(--sage)]/40">
@@ -618,7 +626,7 @@ function Details() {
                 </span>
                 <div className="min-w-0 text-left">
                   <p className="font-text text-[10px] tracking-[0.25em] uppercase text-[var(--sage-deep)]/60">მისამართი</p>
-                  <p className="font-heading text-sm text-[var(--sage-deep)] truncate">Hotel Pool Emocia, ნატახტარი</p>
+                  <p className="font-heading text-sm text-[var(--sage-deep)] truncate"><span className="font-english">Hotel Pool Emocia</span>, ნატახტარი</p>
                 </div>
               </div>
               <div className="relative">
@@ -628,7 +636,7 @@ function Details() {
                   className="w-full h-[300px] md:h-[420px] grayscale-[25%] sepia-[15%] contrast-[1.03]"
                   loading="lazy"
                 />
-                <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(60,80,70,0.20)]" />
+                <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(150,95,110,0.20)]" />
               </div>
               <div className="px-5 py-3 bg-[var(--sage)]/8 border-t border-[var(--sage)]/25">
                 <p className="font-text text-xs text-muted-foreground">ნატახტარი, საქართველო</p>
@@ -641,7 +649,7 @@ function Details() {
               href="https://maps.app.goo.gl/8L3QGvDhSGaWb8TNA?g_st=ic"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[var(--sage-deep)] text-primary-foreground hover:bg-[var(--sage-deep)]/90 transition-colors shadow-[0_10px_25px_rgba(60,80,70,0.25)]"
+              className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[var(--sage-deep)] text-primary-foreground hover:bg-[var(--sage-deep)]/90 transition-colors shadow-[0_10px_25px_rgba(150,95,110,0.25)]"
             >
               <MapPin className="w-5 h-5 shrink-0" strokeWidth={1.5} />
               <span className="font-text text-sm tracking-[0.25em] uppercase">რუკაზე ნახვა</span>
@@ -730,11 +738,10 @@ function RSVPSection() {
 
   return (
     <section className="mt-20 md:mt-28 px-4 max-w-2xl mx-auto text-center">
-      <p className="font-text text-xs tracking-[0.4em] uppercase text-[var(--sage-deep)]/70 mb-4">RSVP</p>
       <h3 className="font-galaktioni text-4xl md:text-5xl text-[var(--gold)] mb-8">შეძლებთ მობრძანებას?</h3>
 
       {done ? (
-        <div className="rounded-3xl border border-[var(--sage)]/40 bg-card p-8 shadow-[0_25px_60px_rgba(60,80,70,0.15)]">
+        <div className="rounded-3xl border border-[var(--sage)]/40 bg-card p-8 shadow-[0_25px_60px_rgba(150,95,110,0.15)]">
           <p className="font-heading text-2xl text-[var(--sage-deep)] mb-3">მადლობა პასუხისთვის</p>
           <p className="font-text text-muted-foreground">
             {attending === "yes" ? "გელოდებით ჩვენთვის უმნიშვნელოვანეს დღეზე!" : "სამწუხაროა, მაგრამ გმადლობთ, რომ გვაცნობეთ."}
@@ -754,7 +761,7 @@ function RSVPSection() {
       ) : (
         <form
           onSubmit={submit}
-          className="rounded-3xl border border-[var(--sage)]/40 bg-card p-6 md:p-8 text-left space-y-5 shadow-[0_25px_60px_rgba(60,80,70,0.15)]"
+          className="rounded-3xl border border-[var(--sage)]/40 bg-card p-6 md:p-8 text-left space-y-5 shadow-[0_25px_60px_rgba(150,95,110,0.15)]"
         >
           <div className="grid grid-cols-2 gap-3">
             <button

@@ -11,7 +11,7 @@ type Wish = {
 };
 
 const pageStyle: React.CSSProperties = {
-  backgroundColor: "#fdf9ef",
+  backgroundColor: "#fdf7f6",
   backgroundImage:
     "repeating-linear-gradient(to bottom, transparent 0px, transparent 33px, rgba(120,110,90,0.14) 33px, rgba(120,110,90,0.14) 34px)",
   backgroundSize: "100% 34px",
@@ -23,7 +23,7 @@ function Page({ wish, empty }: { wish?: Wish; empty?: string }) {
       style={pageStyle}
       className="relative h-full w-full rounded-xl px-5 py-6 sm:px-7 sm:py-8 overflow-hidden"
     >
-      <div className="pointer-events-none absolute inset-0 rounded-xl shadow-[inset_0_0_50px_rgba(140,120,80,0.13)]" />
+      <div className="pointer-events-none absolute inset-0 rounded-xl shadow-[inset_0_0_50px_rgba(170,110,120,0.14)]" />
       {wish ? (
         <div className="relative flex h-full flex-col">
           <p className="font-galaktioni text-[19px] sm:text-[22px] leading-[34px] text-[var(--sage-deep)]">
@@ -114,7 +114,7 @@ export default function WishBook() {
   };
 
   const inputClass =
-    "w-full rounded-2xl border border-[var(--sage)]/50 bg-[#fdf9ef] px-4 py-3 font-text text-[15px] text-foreground placeholder:text-[var(--sage-deep)]/35 outline-none focus:border-[var(--sage-deep)]/60 transition-colors";
+    "w-full rounded-2xl border border-[var(--sage)]/50 bg-[#fdf7f6] px-4 py-3 font-text text-[15px] text-foreground placeholder:text-[var(--sage-deep)]/35 outline-none focus:border-[var(--sage-deep)]/60 transition-colors";
 
   return (
     <section className="w-full max-w-3xl mt-20 md:mt-28 px-1 text-center animate-fade-in-up">
@@ -130,7 +130,7 @@ export default function WishBook() {
 
       {/* Book */}
       <div
-        className="relative mx-auto w-full rounded-[26px] p-3 sm:p-5 shadow-[0_30px_70px_rgba(60,80,70,0.28)]"
+        className="relative mx-auto w-full rounded-[26px] p-3 sm:p-5 shadow-[0_30px_70px_rgba(150,95,110,0.28)]"
         style={{
           background:
             "linear-gradient(145deg, var(--sage-deep), color-mix(in oklab, var(--sage-deep) 78%, black))",
@@ -182,11 +182,11 @@ export default function WishBook() {
             onClick={() => go("prev")}
             disabled={spread === 0}
             aria-label="წინა გვერდი"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#fdf9ef]/90 text-[var(--sage-deep)] transition-opacity disabled:opacity-30"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#fdf7f6]/90 text-[var(--sage-deep)] transition-opacity disabled:opacity-30"
           >
             <ChevronLeft className="h-5 w-5" strokeWidth={1.5} />
           </button>
-          <p className="font-text text-[11px] tracking-[0.25em] uppercase text-[#fdf9ef]/80">
+          <p className="font-text text-[11px] tracking-[0.25em] uppercase text-[#fdf7f6]/80">
             {loading ? "იტვირთება..." : `გვერდი ${spread + 1} / ${totalSpreads}`}
           </p>
           <button
@@ -194,7 +194,7 @@ export default function WishBook() {
             onClick={() => go("next")}
             disabled={spread >= totalSpreads - 1}
             aria-label="შემდეგი გვერდი"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#fdf9ef]/90 text-[var(--sage-deep)] transition-opacity disabled:opacity-30"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#fdf7f6]/90 text-[var(--sage-deep)] transition-opacity disabled:opacity-30"
           >
             <ChevronRight className="h-5 w-5" strokeWidth={1.5} />
           </button>
