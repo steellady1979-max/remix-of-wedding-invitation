@@ -598,19 +598,17 @@ function Details() {
             ლოკაცია
           </p>
           <h3 className="font-heading text-3xl md:text-4xl text-[var(--sage-deep)] mb-3">
-            რესტორანი „ბაგინეთი“
+            Hotel Pool Emocia
           </h3>
           <p className="font-text text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
-            მცხეთა, საქართველო
+            ვახშამი 18:00 · ნატახტარი, საქართველო
           </p>
 
           <RevealImage
-            src={baghinetiArtAsset}
-            alt="რესტორანი ბაგინეთი — ჯვრისწერის თაღი"
+            src={dinnerVenueAsset.url}
+            alt="Hotel Pool Emocia — ვახშმის ლოკაცია"
             className="mb-8"
           />
-
-
 
           <div className="relative rounded-[28px] p-[6px] bg-[linear-gradient(140deg,color-mix(in_oklab,var(--sage)_45%,transparent),transparent_45%,color-mix(in_oklab,var(--gold)_35%,transparent))] shadow-[0_30px_70px_rgba(60,80,70,0.22)]">
             <div className="relative rounded-[22px] overflow-hidden border border-[var(--sage)]/40 bg-card">
@@ -620,27 +618,27 @@ function Details() {
                 </span>
                 <div className="min-w-0 text-left">
                   <p className="font-text text-[10px] tracking-[0.25em] uppercase text-[var(--sage-deep)]/60">მისამართი</p>
-                  <p className="font-heading text-sm text-[var(--sage-deep)] truncate">რესტორანი „ბაგინეთი“</p>
+                  <p className="font-heading text-sm text-[var(--sage-deep)] truncate">Hotel Pool Emocia, ნატახტარი</p>
                 </div>
               </div>
               <div className="relative">
                 <iframe
-                  title="Restaurant Bagineti"
-                  src="https://www.google.com/maps?q=Bagineti+Mtskheta&output=embed"
+                  title="Hotel Pool Emocia"
+                  src="https://www.google.com/maps?q=Hotel+Pool+Emocia+Natakhtari&output=embed"
                   className="w-full h-[300px] md:h-[420px] grayscale-[25%] sepia-[15%] contrast-[1.03]"
                   loading="lazy"
                 />
                 <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_45px_rgba(60,80,70,0.20)]" />
               </div>
               <div className="px-5 py-3 bg-[var(--sage)]/8 border-t border-[var(--sage)]/25">
-                <p className="font-text text-xs text-muted-foreground">მცხეთა, საქართველო</p>
+                <p className="font-text text-xs text-muted-foreground">ნატახტარი, საქართველო</p>
               </div>
             </div>
           </div>
 
           <div className="mt-6 flex items-center justify-center">
             <a
-              href="https://maps.app.goo.gl/BM3G4zawFsmjsckJ8?g_st=ic"
+              href="https://maps.app.goo.gl/8L3QGvDhSGaWb8TNA?g_st=ic"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[var(--sage-deep)] text-primary-foreground hover:bg-[var(--sage-deep)]/90 transition-colors shadow-[0_10px_25px_rgba(60,80,70,0.25)]"
