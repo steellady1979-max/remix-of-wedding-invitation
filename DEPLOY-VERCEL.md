@@ -17,9 +17,10 @@
    | `VITE_SUPABASE_PUBLISHABLE_KEY` | იგივე რაც `.env`-ში |
    | `VITE_SUPABASE_PROJECT_ID`      | იგივე რაც `.env`-ში |
    | `GOOGLE_APPS_SCRIPT_URL`         | Apps Script Web App-ის `/exec` URL |
-   | `GOOGLE_APPS_SCRIPT_SECRET`      | Apps Script-ის `API_SECRET` მნიშვნელობა |
+   | `API_SECRET`                     | Apps Script-ის `API_SECRET` მნიშვნელობა |
 
    RSVP-ისა და სურვილების Google Sheets-ში ჩასაწერად ბოლო ორი ცვლადი აუცილებელია.
+   თავსებადობისთვის კოდი ასევე იღებს `GOOGLE_APPS_SCRIPT_SECRET` სახელს.
    `ADMIN_ACCESS_KEY`, `SUPABASE_SERVICE_ROLE_KEY` და `NITRO_PRESET` არ არის საჭირო.
 
 4. Deploy. `vercel.json` ავტომატურად ირჩევს Vercel-ის server preset-ს.

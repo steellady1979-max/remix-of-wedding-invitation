@@ -12,7 +12,9 @@
 6. დაადასტურეთ Google-ის ავტორიზაცია და დააკოპირეთ `/exec`-ით დასრულებული Web App URL.
 7. Vercel → Project → Settings → Environment Variables-ში დაამატეთ:
    - `GOOGLE_APPS_SCRIPT_URL` — დაკოპირებული `/exec` URL
-   - `GOOGLE_APPS_SCRIPT_SECRET` — ზუსტად იგივე მნიშვნელობა, რაც `API_SECRET`
+   - `API_SECRET` — ზუსტად იგივე მნიშვნელობა, რაც Apps Script-ის `API_SECRET`
+
+კოდი თავსებადობისთვის `GOOGLE_APPS_SCRIPT_SECRET` სახელსაც იღებს.
 8. გაუშვით ახალი deployment.
 
 `LOVABLE_API_KEY` და `GOOGLE_SHEETS_API_KEY` ამის შემდეგ აღარ გამოიყენება და Vercel-იდან შეგიძლიათ წაშალოთ.

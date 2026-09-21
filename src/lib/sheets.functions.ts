@@ -9,7 +9,8 @@ type AppsScriptResponse<T extends object = object> =
 
 async function callGoogleSheets<T extends object>(payload: object): Promise<T> {
   const url = process.env["GOOGLE_APPS_SCRIPT_URL"];
-  const secret = process.env["GOOGLE_APPS_SCRIPT_SECRET"];
+  const secret =
+    process.env["GOOGLE_APPS_SCRIPT_SECRET"] ?? process.env["API_SECRET"];
 
   if (!url || !secret) {
     throw new Error("Google Sheets connection is not configured");
