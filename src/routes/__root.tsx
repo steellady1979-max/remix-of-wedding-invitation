@@ -12,6 +12,10 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
+const SITE_URL = "https://shoti-elene.vercel.app";
+const PREVIEW_IMAGE_URL = `${SITE_URL}/og-wedding-preview.png`;
+const PREVIEW_VIDEO_URL = `${SITE_URL}/wedding-intro.mp4`;
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -83,15 +87,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "ელენე & შოთი" },
       { property: "og:description", content: "ელენესა და შოთის ქორწილის მოსაწვევი — 3 ოქტომბერი, 2026." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:site_name", content: "ელენე & შოთი" },
+      { property: "og:locale", content: "ka_GE" },
+      { property: "og:image", content: PREVIEW_IMAGE_URL },
+      { property: "og:image:secure_url", content: PREVIEW_IMAGE_URL },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1734" },
+      { property: "og:image:height", content: "907" },
+      { property: "og:image:alt", content: "ელენე და შოთი — ქორწილის მოსაწვევი" },
+      { property: "og:video", content: PREVIEW_VIDEO_URL },
+      { property: "og:video:secure_url", content: PREVIEW_VIDEO_URL },
+      { property: "og:video:type", content: "video/mp4" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "ელენე & შოთი" },
       { name: "twitter:description", content: "ელენესა და შოთის ქორწილის მოსაწვევი — 3 ოქტომბერი, 2026." },
+      { name: "twitter:image", content: PREVIEW_IMAGE_URL },
+      { name: "twitter:image:alt", content: "ელენე და შოთი — ქორწილის მოსაწვევი" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "canonical", href: SITE_URL },
+      { rel: "icon", type: "image/png", href: "/wedding-couple-icon.png" },
+      { rel: "apple-touch-icon", href: "/wedding-couple-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

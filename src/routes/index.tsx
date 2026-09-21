@@ -13,6 +13,9 @@ import dinnerVenueAsset from "@/assets/dinner-venue.jpg";
 import envelopeAsset from "@/assets/envelope-card-clean.png";
 import churchArtAsset from "@/assets/church-saguramo-art.jpg";
 
+const SITE_URL = "https://shoti-elene.vercel.app";
+const PREVIEW_IMAGE_URL = `${SITE_URL}/og-wedding-preview.png`;
+const PREVIEW_VIDEO_URL = `${SITE_URL}/wedding-intro.mp4`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,9 +25,23 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "ელენე & შოთი" },
       { property: "og:description", content: "3 ოქტომბერი, 2026 — ილია მართლის ტაძარი და Hotel Pool Emocia, ნატახტარი" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:site_name", content: "ელენე & შოთი" },
+      { property: "og:locale", content: "ka_GE" },
+      { property: "og:image", content: PREVIEW_IMAGE_URL },
+      { property: "og:image:secure_url", content: PREVIEW_IMAGE_URL },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1734" },
+      { property: "og:image:height", content: "907" },
+      { property: "og:image:alt", content: "ელენე და შოთი — ქორწილის მოსაწვევი" },
+      { property: "og:video", content: PREVIEW_VIDEO_URL },
+      { property: "og:video:secure_url", content: PREVIEW_VIDEO_URL },
+      { property: "og:video:type", content: "video/mp4" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "ელენე & შოთი" },
       { name: "twitter:description", content: "3 ოქტომბერი, 2026 — ილია მართლის ტაძარი და Hotel Pool Emocia, ნატახტარი" },
+      { name: "twitter:image", content: PREVIEW_IMAGE_URL },
+      { name: "twitter:image:alt", content: "ელენე და შოთი — ქორწილის მოსაწვევი" },
     ],
   }),
   component: Invitation,
