@@ -1,33 +1,36 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-const SPREADSHEET_ID = "1Okt8t-VgO-TAPtGrLJkDla2llh8y-QodV60149X68Zg";
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_sheets/v4";
+type Wish = { date: string; name: string; message: string };
 
-async function appendRow(sheet: "RSVP" | "Wishes", values: (string | number)[]) {
-  const lovableKey = process.env["LOVABLE_API_KEY"];
-  const sheetsKey = process.env["GOOGLE_SHEETS_API_KEY"];
-  if (!lovableKey || !sheetsKey) throw new Error("Google Sheets connection is not configured");
+type AppsScriptResponse<T extends object = object> =
+  | ({ ok: true } & T)
+  | { ok: false; error?: string };
 
-  const url = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/${sheet}!A:F:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${lovableKey}`,
-      "X-Connection-Api-Key": sheetsKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ values: [values] }),
-  });
-  if (!res.ok) {
-    const body = await res.text();
-    console.error(`Sheets append failed [${res.status}]: ${body}`);
-    throw new Error(`Sheets append failed [${res.status}]: ${body}`);
+async function callGoogleSheets<T extends object>(payload: object): Promise<T> {
+  const url = process.env["GOOGLE_APPS_SCRIPT_URL"];
+  const secret = process.env["GOOGLE_APPS_SCRIPT_SECRET"];
+
+  if (!url || !secret) {
+    throw new Error("Google Sheets connection is not configured");
   }
-}
 
-function nowTbilisi() {
-  return new Date().toLocaleString("ka-GE", { timeZone: "Asia/Tbilisi" });
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...payload, secret }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Google Apps Script request failed [${response.status}]`);
+  }
+
+  const result = (await response.json()) as AppsScriptResponse<T>;
+  if (!result.ok) {
+    throw new Error(result.error || "Google Apps Script request failed");
+  }
+
+  return result;
 }
 
 export const submitRsvp = createServerFn({ method: "POST" })
@@ -38,19 +41,11 @@ export const submitRsvp = createServerFn({ method: "POST" })
         attending: z.enum(["yes", "no"]),
         guests: z.number().int().min(0).max(10),
         plusOneName: z.string().trim().max(120).nullable().optional(),
-        message: z.string().trim().max(1000).nullable().optional(),
       })
       .parse(data),
   )
   .handler(async ({ data }) => {
-    await appendRow("RSVP", [
-      nowTbilisi(),
-      data.fullName,
-      data.attending === "yes" ? "დიახ" : "ვერ დავესწრები",
-      data.guests,
-      data.plusOneName ?? "",
-      data.message ?? "",
-    ]);
+    await callGoogleSheets({ action: "rsvp", ...data });
     return { ok: true };
   });
 
@@ -59,35 +54,21 @@ export const submitWish = createServerFn({ method: "POST" })
     z
       .object({
         name: z.string().trim().min(1).max(80),
-        message: z.string().trim().min(1).max(600),
+        message: z.string().trim().min(1).max(2000),
       })
       .parse(data),
   )
   .handler(async ({ data }) => {
-    await appendRow("Wishes", [nowTbilisi(), data.name, data.message]);
+    await callGoogleSheets({ action: "wish", ...data });
     return { ok: true };
   });
 
 export const listWishes = createServerFn({ method: "GET" }).handler(async () => {
-  const lovableKey = process.env["LOVABLE_API_KEY"];
-  const sheetsKey = process.env["GOOGLE_SHEETS_API_KEY"];
-  if (!lovableKey || !sheetsKey) return { wishes: [] as { date: string; name: string; message: string }[] };
-
-  const url = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/Wishes!A2:C1000`;
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${lovableKey}`,
-      "X-Connection-Api-Key": sheetsKey,
-    },
-  });
-  if (!res.ok) {
-    const body = await res.text();
-    console.error(`Sheets read failed [${res.status}]: ${body}`);
-    return { wishes: [] as { date: string; name: string; message: string }[] };
+  try {
+    const result = await callGoogleSheets<{ wishes: Wish[] }>({ action: "listWishes" });
+    return { wishes: result.wishes ?? [] };
+  } catch (error) {
+    console.error("Google Sheets read failed", error);
+    return { wishes: [] as Wish[] };
   }
-  const json = (await res.json()) as { values?: string[][] };
-  const wishes = (json.values ?? [])
-    .filter((r) => (r[1] ?? "").trim() && (r[2] ?? "").trim())
-    .map((r) => ({ date: r[0] ?? "", name: r[1] ?? "", message: r[2] ?? "" }));
-  return { wishes };
 });

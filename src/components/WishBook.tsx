@@ -223,7 +223,7 @@ export default function WishBook() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={4}
-            maxLength={600}
+            maxLength={2000}
             placeholder="დაწერეთ თქვენი სურვილი..."
             className={inputClass}
           />

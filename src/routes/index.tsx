@@ -702,7 +702,6 @@ function RSVPSection() {
   const [fullName, setFullName] = useState("");
   const [hasPlusOne, setHasPlusOne] = useState(false);
   const [plusOneName, setPlusOneName] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -721,7 +720,6 @@ function RSVPSection() {
           attending,
           guests: attending === "yes" ? (hasPlusOne ? 2 : 1) : 0,
           plusOneName: attending === "yes" && hasPlusOne ? plusOneName.trim() : null,
-          message: message.trim() || null,
         },
       });
       setDone(true);
@@ -829,19 +827,6 @@ function RSVPSection() {
               )}
             </div>
           )}
-
-          <div>
-            <label className="block font-text text-xs tracking-[0.2em] uppercase text-[var(--sage-deep)]/70 mb-2">
-              სურვილი (სურვილისამებრ)
-            </label>
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows={3}
-              maxLength={1000}
-              className={inputClass}
-            />
-          </div>
 
           <button
             type="submit"
